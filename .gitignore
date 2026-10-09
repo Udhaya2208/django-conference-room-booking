@@ -1,0 +1,100 @@
+# ==============================
+
+# Environment variables and secrets
+
+# ==============================
+
+.env
+.env.*
+!.env.example
+
+# ==============================
+
+# Python
+
+# ==============================
+
+**pycache**/
+*.py[cod]
+*$py.class
+*.so
+
+# ==============================
+
+# Virtual environments
+
+# ==============================
+
+venv/
+.venv/
+env/
+
+# ==============================
+
+# Django
+
+# ==============================
+
+*.log
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+
+# ==============================
+
+# User uploads and media
+
+# ==============================
+
+media/
+
+# ==============================
+
+# IDE and editor settings
+
+# ==============================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==============================
+
+# Operating system files
+
+# ==============================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+
+# Testing and coverage
+
+# ==============================
+
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ==============================
+
+# Build and distribution
+
+# ==============================
+
+build/
+dist/
+*.egg-info/
+
+# ==============================
+
+# Environment and temporary files
+
+# ==============================
+
+*.tmp
+*.temp

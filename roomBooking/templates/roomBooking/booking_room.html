@@ -1,0 +1,106 @@
+{% extends "roomBooking/dashboard.html" %}
+{% load static %}
+
+{% block title %}
+BOOKING
+{% endblock title %}
+
+{% block body %}
+
+<div class="timeline-page-container">
+  {% for room in rooms %}
+  {% if roomName == room.roomName %}
+  <div class="booking-card">
+    <div class="room-header">
+      <div class="room-header-img">
+        {% if room.roomImages %}
+        <img src="{{ room.roomImages.url }}" alt="{{ room.roomName }}">
+        {% else %}
+        <div class="placeholder-img">Room Image</div>
+        {% endif %}
+      </div>
+      <div class="room-header-details">
+        <h2>{{ room.roomName }}</h2>
+        <p><strong>Capacity:</strong> {{ room.roomCapacity }} people</p>
+        <p><strong>Facilities:</strong>
+          {% if room.roomMonitor %} Monitor, {% endif %}
+          {% if room.whiteBoard %}Whiteboard, {% endif %}
+          {% if room.videoConferencing %}Video Conferencing{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <div class="date-selection-container">
+      <label for="bookingDate">Select Date:</label>
+      <input type="date" id="bookingDate" class="date-input-field" value="{{ selected_date }}" min="{{ today }}">
+    </div>
+
+    <div class="timeline-wrapper">
+      <div class="timeline-scroll-container" id="timelineScroll">
+        <div class="timeline-grid" id="timelineGrid"></div>
+      </div>
+    </div>
+
+    <div class="timeline-legend">
+      <div class="legend-item">
+        <span class="legend-box available-box"></span> Available
+      </div>
+      <div class="legend-item">
+        <span class="legend-box selected-box"></span> Your selection
+      </div>
+      <div class="legend-item">
+        <span class="legend-box past-box"></span> Unavailable
+      </div>
+      <div class="legend-item">
+        <span class="legend-box booked-box"></span> Already booked
+      </div>
+    </div>
+
+    <div class="selection-summary">
+      <strong>Date:</strong> <span id="summaryDateText">Today</span> &nbsp;|&nbsp;
+      <strong>Selected:</strong> <span id="timeRangeText">None</span> &nbsp;|&nbsp;
+      <strong>Duration:</strong> <span id="durationText">0 min</span>
+    </div>
+
+    <form method="POST" action="" id="bookingForm">
+      {% csrf_token %}
+      <input type="hidden" name="room_name" value="{{ room.roomName }}">
+      <input type="hidden" name="booking_date" id="formBookingDate">
+      <input type="hidden" name="start_time" id="formStartTime">
+      <input type="hidden" name="end_time" id="formEndTime">
+      <button type="button" class="btn mt-4 text-white" style="background-color: rgb(9, 15, 27);" id="bookBtn" disabled>
+        Book Room
+      </button>
+    </form>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<!-- Floating Confirmation Box Matching my_booking Cancel Dialog -->
+<div id="bookingConfirmToast" class="position-fixed top-50 start-50 translate-middle shadow bg-white p-4 rounded-3 border"
+     style="z-index: 1060; width: 340px; display: none;">
+  <h6 class="fw-bold mb-3 text-dark" id="toastHeaderPrompt">Are you sure you want to book this room?</h6>
+
+  <div class="text-secondary mb-3 small" style="line-height: 1.6;">
+    <div class="text-dark fw-semibold fs-6 mb-1">{{ roomName }}</div>
+    <div>Date: <span id="toastDateText">-</span></div>
+    <div>Time: <span id="toastTimeText">-</span></div>
+  </div>
+
+  <div class="d-flex justify-content-start gap-2 pt-2">
+    <button type="button" class="btn btn-sm text-white px-3" style="background-color: rgb(9, 15, 27);" id="confirmBookingYesBtn">
+      Yes, Book
+    </button>
+    <button type="button" class="btn btn-sm btn-secondary px-3" id="confirmBookingNoBtn">
+      No
+    </button>
+  </div>
+</div>
+
+{{ bookings_by_date|json_script:"existingBookingsData" }}
+{{ modify_info|json_script:"modifyingBookingData" }}
+
+<script src="{% static 'scripts/timelinePicker.js' %}"></script>
+
+{% endblock body %}

@@ -1,0 +1,65 @@
+{% extends "roomBooking/dashboard.html" %}
+{% load static %}
+
+{% block title %}ROOM CALENDAR{% endblock title %}
+
+{% block body %}
+
+
+<div class="calendar-page-container">
+  <div class="calendar-card">
+    <div class="calendar-header-bar">
+      <div class="date-picker-group">
+        <label for="calDatePicker">Select Date:</label>
+        <input type="date" id="calDatePicker" class="calendar-date-input">
+      </div>
+    </div>
+
+    <div class="multi-timeline-wrapper" id="calendarScrollContainer">
+      <div class="timeline-table">
+        <div class="timeline-row timeline-header-row">
+          <div class="sticky-room-cell header-room-cell">Rooms & Details</div>
+          <div class="slots-track header-track" id="hoursHeaderRow"></div>
+        </div>
+
+        {% for room in rooms %}
+        <div class="timeline-row" data-room-id="{{ room.roomId }}" data-room-name="{{ room.roomName }}">
+          <div class="sticky-room-cell row-room-cell">
+            <div class="room-detail-box">
+              {% if room.roomImages %}
+                <img src="{{ room.roomImages.url }}" alt="{{ room.roomName }}" class="room-thumbnail">
+              {% else %}
+                <div class="room-thumbnail d-flex align-items-center justify-content-center text-muted" style="font-size: 10px;">No Img</div>
+              {% endif %}
+
+              <div class="room-meta">
+                <a href="{% url 'Book_Room' room.roomId room.roomName|slugify %}" class="room-meta-title">
+                  {{ room.roomName }}
+                </a>
+                <p class="room-meta-info">👥 Capacity: {{ room.roomCapacity }}</p>
+                <div class="facility-tags">
+                  {% if room.roomMonitor  %}<span class="facility-tag">Monitor</span>{% endif %}
+                  {% if room.whiteBoard %}<span class="facility-tag">Board</span>{% endif %}
+                  {% if room.videoConferencing %}<span class="facility-tag">VC</span>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slots-track room-slots-track" id="roomTrack_{{ room.roomId }}"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="calendar-legend">
+      <div class="legend-item"><span class="legend-box available-box"></span> Available</div>
+      <div class="legend-item"><span class="legend-box past-box"></span> Unavailable</div>
+      <div class="legend-item"><span class="legend-box booked-box"></span> Already booked</div>
+    </div>
+  </div>
+</div>
+
+
+<script src="{% static 'scripts/showCalendar.js' %}"></script>
+{% endblock body %}
+

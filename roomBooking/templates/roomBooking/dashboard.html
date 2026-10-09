@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeskSpace</title>
+    <!-- <link rel="icon" type="image/png" href="{% static 'media/images/title_logo.png' %}"> -->
+
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+    <link rel="stylesheet" href="{% static 'css/calendarStyles.css' %}">
+
+</head>
+
+<body>
+    {% include "roomBooking/custom-alert.html" %}
+    <nav class="navbar">
+        <div class="logo"><a href="{% url 'dashboard' %}">DeskSpace </a></div>
+        <div class="nav-auth">
+            {% if request.user.is_authenticated %}
+            <select class="btn-signin border-0 text-white text-center" style="background-color: rgb(9 15 27)"
+                onchange="if (this.value) window.location.href=this.value;" id="nav-dropdown">
+                <option value="" selected disabled hidden>Quick Book</option>
+                {% for room in rooms %}
+                {% if not room.is_maintenance %}
+                <option value="{% url 'Book_Room' room.roomId room.roomName|slugify %}" id="{{ room.roomId }}"
+                 {% if room.is_maintenance %}disabled style="color: #adb5bd;" {% endif %}>
+                    {{ room.roomName }} 
+                </option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <a href="{% url 'my_booking' %}" class="btn-signin">My Booking</a>
+            <a href="{% url 'Calendar_View' %}" class="btn-signin">Calendar</a>
+            <a class="btn-signin">{% if not request.user.first_name %}
+                {{ request.user.username|capfirst }}
+                {% else %}
+                {{ request.user.first_name }}
+                {% endif %}</a>
+            <a href="{% url 'logout_page' %}" class="btn-signin">Log out</a>
+            {% endif %}
+        </div>
+    </nav>
+    {% block body %}
+    <main class="recommendations ">
+        <h1 style="color: rgb(9 15 26)">
+            DeskSpace
+        </h1>
+        <p class="subtitle">Discover our handpicked meeting and conference spaces tailored for peak productivity</p>
+        <div class="card-grid">
+            {% if rooms %}
+            {% for room in rooms %}
+            <div class="room-card box-shadow">
+                <div class="image-container">
+                    <img src="{{ room.roomImages.url }}" alt="{{ room.roomName }}">
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h3 class="mb-0">{{ room.roomName }}</h3>
+                        {% if room.is_maintenance %}
+                        <span class="badge bg-warning text-dark px-2 py-1 small fw-semibold">
+                            Under Maintenance
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <p class="location">
+                        Room Capacity: {{ room.roomCapacity }}
+                    </p>
+
+                    <div class="room-facilities">
+                        <h4>Facilities</h4>
+                        <p>{% if room.roomMonitor %} ✅ Monitor {% endif %}</p>
+                        <p>{% if room.whiteBoard %} ✅ Whiteboard {% endif %}</p>
+                        <p>{% if room.videoConferencing %} ✅ Video Conferencing {% endif %}</p>
+                    </div>
+
+                    {% if room.is_maintenance %}
+                    <!-- Disabled Maintenance Button (Not Clickable) -->
+                    <button type="button" class="sticky-sm-bottom btn w-100 text-white"
+                        style="background-color: #6c757d; cursor: not-allowed; opacity: 0.75;" disabled>
+                        Under Maintenance
+                    </button>
+                    {% else %}
+                    <!-- Active Booking Button -->
+                    <a href="{% url 'Book_Room' room.roomId room.roomName|slugify %}"
+                        class="sticky-sm-bottom btn w-100 text-white"
+                        style="background-color: rgb(9 15 26); text-decoration: none;">
+                        Book Room
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No Rooms are Available</p>
+            {% endif %}
+        </div>
+
+    </main>
+    <script src="{% static 'scripts/navbarDropdown.js' %}"></script>
+
+
+    {% endblock body %}
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        showAlert("{{ message|escapejs }}", "{{ message.tags|escapejs }}");
+    </script>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,455 @@
+.btn-primary1 {
+    --bs-btn-color: #fff !important;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-color: #fff;
+
+    --bs-btn-bg: #04182b !important;
+    --bs-btn-border-color: #04182b !important;
+    --bs-btn-disabled-bg: #04182b;
+    --bs-btn-disabled-border-color: #04182b;
+
+    --bs-btn-hover-border-color: #0a58ca !important;
+    --bs-btn-active-bg: #0a58ca;
+
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-hover-bg: #0b5ed7;
+
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.btn-primary1a {
+    --bs-btn-color: #fff !important;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-color: #fff;
+
+    --bs-btn-bg: #0d6efd !important;
+    --bs-btn-border-color: #0d6efd !important;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+
+    --bs-btn-hover-border-color: #0a58ca !important;
+    --bs-btn-active-bg: #0a58ca;
+
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-hover-bg: #0b5ed7;
+
+    --bs-btn-focus-shadow-rgb: 49,132,253;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+body{
+    background-color: #f8f9fa;
+}
+
+.sideNav {
+    display: flex;
+}
+
+.sidebar.content {
+    background-color: #04182B;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex: 0 0 235px;
+    width: 235px;
+    flex-direction: column;
+    z-index:3;
+    overflow-y :auto;
+
+
+       /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #1f4d70 #04182B;
+}
+
+
+/*.sidebar-small a i[data-text]::after {*/
+/*    content: attr(data-text);*/
+
+/*    position: absolute;*/
+/*    left: 35px;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+
+/*    background: #04182B;*/
+/*    color: #fff;*/
+
+/*    padding: 7px 12px;*/
+/*    border-radius: 4px;*/
+
+/*    font-size: 12px;*/
+/*    font-weight: 500;*/
+/*    white-space: nowrap;*/
+/*    display: none;*/
+/*    pointer-events: none;*/
+/*    z-index: 9999;*/
+/*    transition: opacity 0.15s ease;*/
+/*}*/
+
+/*.sidebar-small a:hover i[data-text]::after {*/
+/*    display: block;*/
+/*}*/
+
+.sidebar.hide {
+    display: none;   
+}
+
+/* scroll bar design */
+.sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+
+ 
+}
+
+/* Chrome, Edge, Safari */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #04182B;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #1f4d70;
+    border-radius: 10px;
+}
+/*  */
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar a:hover {
+    background-color: #0A2236;
+}
+
+
+.sidebar-small.content {
+    background-color: #04182B;
+    color: white;
+    height: 100vh;
+    padding: 15px;
+    display: flex;
+    flex: 0 0 75px;
+    width: 75px;
+    flex-direction: column;
+    z-index:3;
+    overflow-y :auto;
+    gap: 20px;
+
+       /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #1f4d70 #04182B;
+}
+
+.sidebar-small.hide {
+    display: none;   
+}
+
+.sidebar-small a i {
+    font-size: 20px;
+}
+
+.non-sidebar {
+    display:flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    padding-right: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content {
+    width:100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #1f4d70 #04182B;
+}
+
+/* Chrome, Edge, Safari */
+.content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+    background: #04182B;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background: #1f4d70;
+    border-radius: 10px;
+}
+/*  */
+
+.content-b {
+    flex-grow: 1;
+    padding: 0 40px 40px 250px;
+    width:100%;
+}
+
+.table-container {
+  max-height: 500px; /* Set max height for scrolling */
+  overflow-y: auto;
+  display: block;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9; /* Keep header visible */
+  z-index: 1;
+}
+
+
+.btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.logo {
+    width: 200px;
+    margin-bottom: 50px;
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+.table td {
+   vertical-align: middle;
+   padding: 14px;
+   text-align: left;
+}
+.dropdown li {
+    padding: 10px;
+}
+
+.toolbar {
+    width: calc(100% - 16rem);
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+   background-color: #fff !important;
+}
+i {
+    cursor: pointer; /* Changes cursor to a hand for all <i> tags */
+}
+
+textarea {
+    width: 100%; /* Match the width of input */
+    max-width: 100%; /* Prevent overflow */
+    box-sizing: border-box; /* Ensures padding/borders don't affect width */
+}
+
+.navbar {
+    width:100%;
+    position: sticky;
+    top:0;
+    z-index: 2;
+}
+
+.nav_user_name{
+  text-transform: uppercase;
+}
+.nav_user_role{
+    font-size: x-small;
+    color: #9b0d47;
+    font-weight: bold;
+}
+
+.nav_user_style{
+    display: inline-block;
+    text-align: right;
+    vertical-align: bottom;
+    line-height: 16px;
+}
+.nav_user_name_logo{
+    font-size: xx-large;
+    color: #04182B;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.togglePassword{
+    margin-left: -32px;
+    cursor: pointer;
+}
+
+input::-ms-reveal {
+    display: none !important;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .form-control {
+  padding-right: 40px; /* give space for the icon */
+}
+
+
+.password-wrapper .togglePassword {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+}
+
+.custom-card {
+  height: 200px;
+  width: 300px;
+  padding: 1rem;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+}
+
+.custom-icon {
+  font-size: 2.5rem;
+  color: #0d1c2e;
+}
+
+.custom-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.custom-text {
+  color: #444;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+
+.subTitle{
+    margin-top: -1rem !important;
+    font-size: small;
+    color: brown;
+}
+
+.file-name {
+	margin-top: 5px;
+	font-size: 12px;
+	color: #555;
+	text-align: center;
+}
+
+
+
+
+
+.file-upload-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.file-upload-btn {
+  background-color: #05182b !important;
+  color: white !important;
+  border: none;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.file-upload-btn svg {
+  margin-right: 8px;
+}
+
+.file-upload-btn .arrow {
+  margin-left: 12px;
+  font-size: 12px;
+}
+
+.file-upload-input {
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.convertButton {
+  padding:8px;
+  background-color: #05182b !important;
+  color:white !important;
+  width: 150px;
+  text-transform: capitalize;
+}
+
+.btn{
+ text-transform: capitalize !important;
+}
+
+.cstmInput{
+	padding: 8px 5px;
+    font-size: 15px;
+	border-radius: 6px;
+	width: 200px;
+	font-weight: 500;
+	margin-left:50px;
+}
+
+.cstmSelect{
+	padding: 8px 5px;
+	font-size: 15px;
+	border-radius: 6px;
+	width: 150px;
+	font-weight: 500;
+}
+
+
+.custmBadge{
+    --bs-badge-padding-x: 0.65em;
+    --bs-badge-padding-y: 0.35em;
+    --bs-badge-font-size: 0.9em;
+    --bs-badge-font-weight: 700;
+    --bs-badge-color: #fff;
+    --bs-badge-border-radius: var(--bs-border-radius);
+    display: inline-block;
+    padding: var(--bs-badge-padding-y) var(--bs-badge-padding-x);
+    font-size: var(--bs-badge-font-size);
+    font-weight: var(--bs-badge-font-weight);
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: var(--bs-badge-border-radius);
+}
+
+
+.me-custom {
+    margin-right: 4rem !important;
+}
+
+.ms-custom{
+    margin-left: 12pt !important;
+}

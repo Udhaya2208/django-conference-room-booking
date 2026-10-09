@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+
+<body class="bg-light ">
+    {% include "roomBooking/custom-alert.html" %}
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow p-4" style="width: 400px;">
+            <form method="POST">
+                {% csrf_token %}
+                <h4 class="text-center mb-3">Login</h4>
+
+                <div class="mb-3">
+                    <label class="form-label">Enter Username</label>
+                    {# <input type="text" placeholder="Username" name="username" class="form-control">#}
+                    {{ form.username }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Enter your Password</label>
+                    {# <input type="text" placeholder="Password" name="password" class="form-control">#}
+                    {{ form.password }}
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn records-btn w-50 text-white" style="background-color: rgb(9 15 26);"
+                        type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    <script>
+        showAlert("{{ message|escapejs }}", "{{ message.tags|escapejs }}");
+    </script>
+    {% endfor %}
+    {% endif %}
+
+</body>
+
+</html>

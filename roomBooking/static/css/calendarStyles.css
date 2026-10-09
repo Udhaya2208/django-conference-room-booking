@@ -1,0 +1,286 @@
+.calendar-page-container {
+    max-width: 1600px;
+    width: 96%;
+    margin: 24px auto;
+  }
+
+  .calendar-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  }
+
+  .calendar-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .date-picker-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .date-picker-group label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .calendar-date-input {
+    padding: 8px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .multi-timeline-wrapper {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: calc(100vh - 220px);
+    user-select: none;
+    scroll-behavior: smooth;
+    position: relative;
+  }
+
+  .multi-timeline-wrapper::-webkit-scrollbar {
+    height: 9px;
+    width: 9px;
+  }
+  .multi-timeline-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  .timeline-table {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+  }
+
+  .timeline-row {
+    display: flex;
+    position: relative;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .timeline-header-row {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: #f8fafc;
+  }
+
+  .sticky-room-cell {
+    position: sticky;
+    left: 0;
+    width: 340px;
+    min-width: 340px;
+    background-color: #ffffff;
+    border-right: 2px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    z-index: 10;
+    box-sizing: border-box;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.04);
+  }
+
+  .header-room-cell {
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 44px;
+    background-color: #f1f5f9;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #475569;
+    z-index: 25;
+  }
+
+  .row-room-cell {
+    height: 95px;
+  }
+
+  .room-detail-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .room-thumbnail {
+    width: 75px;
+    height: 65px;
+    border-radius: 6px;
+    object-fit: cover;
+    background-color: #f1f5f9;
+    flex-shrink: 0;
+  }
+
+  .room-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .room-meta-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+
+  .room-meta-title:hover {
+    color: #2563eb;
+  }
+
+  .room-meta-info {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .facility-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 3px;
+  }
+
+  .facility-tag {
+    font-size: 10px;
+    background: #f1f5f9;
+    color: #334155;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .slots-track {
+    display: flex;
+    position: relative;
+    height: 95px;
+  }
+
+  .header-track {
+    height: 44px;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #cbd5e1;
+  }
+
+  .hour-header-item {
+    width: 120px;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+    border-right: 1px solid #cbd5e1;
+    box-sizing: border-box;
+  }
+
+  /* Default available slots */
+  .cal-slot {
+    width: 60px;
+    min-width: 60px;
+    height: 100%;
+    background-color:white;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+  }
+
+  .cal-slot.slot-half {
+    border-right: 1px dashed #cbd5e1;
+  }
+
+  .cal-slot.slot-full {
+    border-right: 1px solid #cbd5e1;
+  }
+
+  .cal-slot:hover:not(.past):not(.booked) {
+    background-color:blue;
+  }
+
+  /* Booked slots (future only) */
+  .cal-slot.booked {
+    background-color: #ef4444 !important;
+    cursor: not-allowed;
+  }
+
+.cal-slot.past {
+  background-color: #b0b7c3 !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Booked slots remain solid red */
+.cal-slot.booked {
+  background-color: #ef4444 !important;
+  cursor: not-allowed;
+}
+
+/* Red overlay text badge */
+.cal-booked-badge {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+  .calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #475569;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+  }
+
+  .available-box { background-color: white; border: 1px solid #166534; }
+  .past-box { background-color: #94a3b8; opacity: 0.65; }
+  .booked-box { background-color: #ef4444; }

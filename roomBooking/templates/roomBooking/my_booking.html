@@ -1,0 +1,147 @@
+{% extends "roomBooking/dashboard.html" %}
+{% load static %}
+
+{% block title %}MY BOOKINGS{% endblock title %}
+
+{% block body %}
+{% csrf_token %}
+<style>
+    #bookingsContainer .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #bookingsContainer .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.12) !important;
+    }
+</style>
+
+<div class="container-fluid px-4 px-md-5 py-4">
+
+    <!-- Filter Buttons Bar -->
+    <div class="d-flex flex-wrap gap-2 mb-4" id="recordsFilterBar">
+        <button type="button" 
+                class="btn records-btn {% if selected_option == 'all' or not selected_option %}btn-dark active text-white{% else %}btn-outline-dark{% endif %} rounded-pill px-4 py-2 btn-sm fw-semibold" 
+                onclick="loadBookings('all', this)">
+            All Bookings
+        </button>
+        <button type="button" 
+                class="btn records-btn {% if selected_option == 'today' %}btn-dark active text-white{% else %}btn-outline-dark{% endif %} rounded-pill px-4 py-2 btn-sm fw-semibold" 
+                onclick="loadBookings('today', this)">
+            Today's Bookings
+        </button>
+        <button type="button" 
+                class="btn records-btn {% if selected_option == 'future' %}btn-dark active text-white{% else %}btn-outline-dark{% endif %} rounded-pill px-4 py-2 btn-sm fw-semibold" 
+                onclick="loadBookings('future', this)">
+            Upcoming Bookings
+        </button>
+    </div>
+
+    <!-- Responsive Cards Grid -->
+    <div class="row g-4" id="bookingsContainer">
+        {% for booked in room_booking %}
+        <div class="col-12 col-md-6 col-lg-4" id="booking-card-{{ booked.id }}">
+            <div class="card h-100 shadow-sm border rounded-3 bg-white">
+                <div class="card-body p-4 d-flex flex-column">
+
+                    <!-- Header: Room Name + Status Badge -->
+                    <div class="d-flex justify-content-between align-items-start mb-3 pb-2 border-bottom">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">{{ booked.bookedRoom }}</h5>
+                           
+                        </div>
+                        {% if booked.can_modify %}
+                        <span class="badge bg-success text-white rounded-pill px-3 py-1">Active</span>
+                        {% else %}
+                        <span class="badge bg-secondary text-white rounded-pill px-3 py-1" title="Locked: Cannot modify within 15 mins of start time">Locked</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Clean Structured Details Box -->
+                    <div class="bg-light border rounded-3 p-3 mb-3 small">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary fw-semibold">Booked Date</span>
+                            <span class="fw-bold text-dark">{{ booked.bookedDate }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-secondary fw-semibold">Booked Time</span>
+                            <span class="fw-bold text-primary">{{ booked.startTime|time:"g:i A" }} – {{ booked.endTime|time:"g:i A" }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-secondary fw-semibold">Room Capacity</span>
+                            <span class="fw-bold text-dark">{{ booked.roomId.roomCapacity|default:"N/A" }} People</span>
+                        </div>
+                    </div>
+
+                    <!-- Facility Tags -->
+                    {% if booked.roomId %}
+                    <div class="d-flex flex-wrap gap-1 mb-3">
+                        {% if booked.roomId.roomMonitor %}
+                        <span class="badge bg-white text-secondary border">Monitor</span>
+                        {% endif %}
+                        {% if booked.roomId.whiteBoard %}
+                        <span class="badge bg-white text-secondary border">Whiteboard</span>
+                        {% endif %}
+                        {% if booked.roomId.videoConferencing %}
+                        <span class="badge bg-white text-secondary border">Video Conf</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Action Buttons -->
+                    <div class="mt-auto pt-3 border-top d-flex gap-2 justify-content-end align-items-center">
+                        {% if booked.can_modify %}
+                        <a href="{% url 'Book_Room' booked.roomId.roomId booked.bookedRoom|slugify %}?modify_id={{ booked.id }}" class="text-decoration-none">
+                            <button type="button" class="btn btn-warning btn-sm text-white fw-semibold px-3 rounded-2 " style="background-color: rgb(9 15 26);">
+                                Modify
+                            </button>
+                        </a>
+                        <button type="button"
+                                class="btn btn-danger btn-sm px-3 rounded-2 cancel-trigger-btn"
+                                data-id="{{ booked.id }}"
+                                data-name="{{ booked.bookedRoom }}"
+                                data-date="{{ booked.bookedDate }}"
+                                data-start="{{ booked.startTime|time:'g:i A' }}"
+                                data-end="{{ booked.endTime|time:'g:i A' }}"
+                                onclick="openCancelFromButton(event, this)">
+                            Cancel
+                        </button>
+                        {% else %}
+                        <small class="text-muted me-auto">Locked</small>
+                        <button type="button" class="btn btn-secondary btn-sm px-3 rounded-2" disabled>Modify</button>
+                        <button type="button" class="btn btn-secondary btn-sm px-3 rounded-2" disabled>Cancel</button>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="card border-0 bg-transparent py-5">
+                <h5 class="text-muted fw-bold mb-1">No Bookings Found</h5>
+                <p class="text-muted small">You don't have any bookings under this category.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- Cancellation Modal / Toast -->
+<div class="toast-container position-fixed top-50 start-50 translate-middle p-3" style="z-index: 1055;">
+    <div class="toast shadow-lg border rounded-3 bg-white" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true" id="cancelToast" style="background-color: #ffffff !important; opacity: 1 !important;">
+        <div class="toast-body fs-6 p-4">
+            <div class="fw-bold mb-2 text-dark">Are you sure you want to cancel this booking?</div>
+            <div id="cancelPromptDetails" class="text-muted small mb-3" style="white-space: pre-line;"></div>
+            <div class="pt-2 border-top d-flex gap-2 justify-content-end">
+                <button type="button" onclick="closeCancelPrompt()" class="btn btn-secondary btn-sm px-3 rounded-2" style="background-color: rgb(9 15 26);">No</button>
+                <button type="button" id="confirmDeleteBtn" onclick="confirmDeleteBooking()" class="btn btn-danger btn-sm px-3 text-white rounded-2">Yes, Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'scripts/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'scripts/myBookingDetails.js' %}"></script>
+
+{% endblock body %}

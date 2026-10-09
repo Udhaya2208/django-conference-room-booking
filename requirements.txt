@@ -1,0 +1,7 @@
+asgiref==3.12.1
+Django==4.2.20
+mysqlclient==2.2.7
+pillow==12.3.0
+python-dotenv==1.2.4
+sqlparse==0.6.0
+tzdata==2026.3
